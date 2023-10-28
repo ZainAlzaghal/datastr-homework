@@ -1,0 +1,299 @@
+                                           // question 1 //
+#include <stdio.h>
+#include <stdlib.h>
+struct node{
+int data;
+struct node* next;
+};
+
+void addnum(struct node **head, int x){
+    struct node *newnode=malloc(sizeof(struct node));
+    newnode->data=x;
+    newnode->next=NULL;
+    if(*head==NULL)
+        *head=newnode;
+    else if(newnode->data %2 !=0)
+    {
+        struct  node *current=newnode;
+        current->data=x;
+        current->next=*head;
+        *head=current;
+    }
+    else{
+        struct  node *current=newnode;
+        current->data=x;
+        while(current->next!=NULL)
+            current=current->next;
+        current->next=newnode;
+    }
+}
+
+int main()
+{
+    struct node *head=NULL;
+    int x;
+    printf("enter a number(to exit enter -1):");
+    while(1)
+    {
+        scanf("%d", &x);
+        if(x==-1){
+            break;}
+        addnum(&head, x);
+    }
+    return 0;
+}
+                                                    // question 2 //
+#include <stdio.h>
+#include <stdlib.h>
+struct node{
+int data;
+struct node* next
+};
+
+struct node* createnode(int x){
+struct node *newnode=malloc(sizeof(struct  node));
+if(newnode==NULL){
+    printf("memory allocation failed");
+    exit(1);
+}
+newnode->data=x;
+newnode->next=NULL;
+return newnode;
+}
+void insert(struct node **head, int x){
+struct node *newnode=createnode(x);
+newnode->next=*head;
+*head=newnode;
+
+}
+
+int main()
+{
+    struct node *head=NULL;
+    int x;
+    srand(time(NULL));
+    for(int a=0; a<100; a++){
+        x=rand() %1000;
+        insert(&head, x);
+    }
+    int c=0;
+    struct node *current=head;
+    int num[100];
+    while(current->next!=NULL){
+        num[c]=current->data;
+        current=current->next;
+        c++;
+    }
+    int f=c;
+    int q;
+    for(c=0; c<100; c++){
+        for(f=0; f<100; f++){
+            if(c<f){
+                q=c;
+                c=f;
+                f=q;
+            }
+        }
+    }
+    for(c=0; c<100; c++){
+        printf("%d\n", num[c]);
+    }
+    return 0;
+}
+
+                                    // question 3 //
+#include <stdio.h>
+#include <stdlib.h>
+struct node{
+int stdnum;
+int age;
+char *name;
+struct node* next;
+};
+
+void insert(struct node *head, int stdnum, int age, char *name){
+    struct node *current=malloc(sizeof(struct node));
+    current->stdnum=stdnum;
+    current->age=age;
+    current->name=name;
+    if(head==NULL)
+        head=current;
+    else{
+        current->next=head;
+        head=current;
+    }
+    int c=0;
+    while(current->next!=NULL){
+        c++;
+        current=current->next;
+    }
+    current=head;
+    int f=c;
+    while(f!=c){
+        printf("%d   %s   %d   %d\n", f, current->name, current->age, current->stdnum);
+    }
+}
+int main()
+{
+    struct node *head=NULL;
+    int stdnum;
+    int age;
+    char name;
+    int n;
+    printf("how many students do you want to enter in the list:");
+    scanf("%d", &n);
+    for(n; n!=0; n--){
+        printf("enter student number:");
+        scanf("%d", &stdnum);
+        printf("enter student name:");
+        scanf("%s", &name);
+        printf("enter student age:");
+        scanf("%d", &age);
+        insert(&head, stdnum, age, name);
+    }
+
+
+
+
+    return 0;
+}
+                                  // question 4 //
+#include <stdio.h>
+#include <stdlib.h>
+struct node{
+char *name;
+struct node* next;
+};
+
+void search(struct node *head, char name){
+while(current->name!=name){
+    current->current->next;
+    }
+    if(current->name!=name){
+        printf("the name does not exist");
+    }
+}
+
+int main()
+{
+
+    return 0;
+}
+                                      //question 5 //
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+struct Student {
+    char name[100];
+    struct Student* next;
+};
+
+
+void deleteNextNode(struct Student* head, const char* targetName) {
+    if (head == NULL) {
+        return; // Empty list
+    }
+
+    struct Student* current = head;
+    while (current->next != NULL) {
+        
+        if (strcmp(current->name, targetName) == 0) {
+            
+            struct Student* nodeToDelete = current->next;
+            if (nodeToDelete != NULL) {
+                current->next = nodeToDelete->next;
+                free(nodeToDelete); 
+                return;
+            }
+        }
+        current = current->next;
+    }
+}
+
+int main() {
+    struct Student* head = malloc(sizeof(struct Student));
+    strcpy(head->name, "Alice");
+    head->next = malloc(sizeof(struct Student));
+    strcpy(head->next->name, "Bob");
+    head->next->next = malloc(sizeof(struct Student));
+    strcpy(head->next->next->name, "Charlie");
+    head->next->next->next = NULL;
+
+    
+    printf("Original list:\n");
+    struct Student* current = head;
+    while (current != NULL) {
+        printf("%s\n", current->name);
+        current = current->next;
+    }
+
+    
+    deleteNextNode(head, "Bob");
+
+    
+    printf("\nUpdated list:\n");
+    current = head;
+    while (current != NULL) {
+        printf("%s\n", current->name);
+        current = current->next;
+    }
+
+        while (head != NULL) {
+        struct Student* temp = head;
+        head = head->next;
+        free(temp);
+    }
+
+    return 0;
+}
+                                     // question 6 //
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+struct Record {
+    char name[100];
+    int id;
+};
+
+void printRecordWithLongestName(struct Record* records, int numRecords) {
+    if (numRecords <= 0) {
+        printf("No records to search.\n");
+        return;
+    }
+
+    int maxLength = 0;
+    int longestRecordIndex = 0;
+
+    for (int i = 0; i < numRecords; i++) {
+        int currentLength = strlen(records[i].name);
+        if (currentLength > maxLength) {
+            maxLength = currentLength;
+            longestRecordIndex = i;
+        }
+    }
+
+    printf("Record with the longest name:\n");
+    printf("Name: %s\n", records[longestRecordIndex].name);
+    printf("ID: %d\n", records[longestRecordIndex].id);
+}
+
+int main() {
+        struct Record records[] = {
+        {"Alice Johnson", 1},
+        {"Bob Smith", 2},
+        {"Charlie Brown", 3},
+        {"David Beckham", 4},
+        {"Elizabeth Taylor", 5}
+    };
+
+    int numRecords = sizeof(records) / sizeof(records[0]);
+
+    
+    printRecordWithLongestName(records, numRecords);
+
+    return 0;
+}
